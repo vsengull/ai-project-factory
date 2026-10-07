@@ -9,7 +9,6 @@ import {
   rm,
   writeFile,
 } from 'node:fs/promises';
-import { constants } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -45,6 +44,19 @@ async function renderFiles(directory, variables) {
   );
 }
 
+async function copyDirectoryContents(source, target) {
+  const entries = await readdir(source, { withFileTypes: true });
+  await Promise.all(
+    entries.map((entry) =>
+      cp(path.join(source, entry.name), path.join(target, entry.name), {
+        recursive: entry.isDirectory(),
+        force: false,
+        errorOnExist: true,
+      }),
+    ),
+  );
+}
+
 export async function generateProject({
   projectName,
   stack,
@@ -54,6 +66,7 @@ export async function generateProject({
   const parent = path.resolve(parentDirectory);
   const targetDirectory = path.join(parent, projectName);
   const templateDirectory = path.join(packageRoot, 'templates', stack.key);
+  const sharedTemplateDirectory = path.join(packageRoot, 'templates', '_shared');
 
   if (!(await exists(templateDirectory))) {
     throw new Error(`The ${stack.label} template is missing from this installation.`);
@@ -66,11 +79,8 @@ export async function generateProject({
   const temporaryDirectory = await mkdtemp(path.join(parent, `.${projectName}-`));
 
   try {
-    await cp(templateDirectory, temporaryDirectory, {
-      recursive: true,
-      force: false,
-      mode: constants.COPYFILE_EXCL,
-    });
+    await copyDirectoryContents(templateDirectory, temporaryDirectory);
+    await copyDirectoryContents(sharedTemplateDirectory, temporaryDirectory);
     await renderFiles(temporaryDirectory, {
       projectName,
       projectPackageName: projectName.replaceAll('-', '_'),
@@ -79,6 +89,12 @@ export async function generateProject({
         .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
         .join(' '),
       stackName: stack.label,
+      installCommand: stack.installCommand,
+      startCommand: stack.startCommand,
+      testCommand: stack.testCommand,
+      lintCommand: stack.lintCommand,
+      buildCommand: stack.buildCommand,
+      sourceDirectory: stack.sourceDirectory,
     });
     if (force) await rm(targetDirectory, { recursive: true, force: true });
     await rename(temporaryDirectory, targetDirectory);

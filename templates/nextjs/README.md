@@ -14,6 +14,7 @@ Open <http://localhost:3000>.
 ## Checks
 
 ```bash
+npm test
 npm run lint
 npm run build
 ```
