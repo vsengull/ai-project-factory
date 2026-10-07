@@ -28,6 +28,8 @@ export async function initProject(options = {}) {
   });
 
   console.log(`\nCreated ${stack.label} project at ${result.targetDirectory}`);
-  console.log(`\nNext steps:\n  cd ${projectName}\n  ${stack.installCommand}\n  ${stack.startCommand}`);
+  console.log(
+    `\nNext steps:\n  cd ${JSON.stringify(projectName)}\n  ${stack.installCommand}\n  ${stack.startCommand}`,
+  );
   return result;
 }

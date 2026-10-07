@@ -24,7 +24,9 @@ export const STACKS = Object.freeze(definitions.map(Object.freeze));
 export function getStack(key) {
   const stack = STACKS.find((candidate) => candidate.key === key);
   if (!stack) {
-    throw new Error(`Unsupported stack "${key}". Choose: ${STACKS.map((item) => item.key).join(', ')}.`);
+    throw new Error(
+      `Unsupported stack "${key}". Choose: ${STACKS.map((item) => item.key).join(', ')}.`,
+    );
   }
   return stack;
 }
