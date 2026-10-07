@@ -1,0 +1,58 @@
+{
+  "name": "ai-project-factory",
+  "version": "0.1.0",
+  "description": "Bootstrap AI-agent-ready Flutter, Next.js, and NestJS projects.",
+  "type": "module",
+  "bin": {
+    "ai-project-factory": "./bin/ai-project-factory.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "templates",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "prepack": "npm run build && npm test && npm run lint"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "cli",
+    "scaffolding",
+    "flutter",
+    "nextjs",
+    "nestjs"
+  ],
+  "license": "MIT",
+  "author": "Volkan Sengul",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vsengull/ai-project-factory.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vsengull/ai-project-factory/issues"
+  },
+  "homepage": "https://github.com/vsengull/ai-project-factory#readme",
+  "dependencies": {
+    "@inquirer/prompts": "^7.8.6",
+    "commander": "^14.0.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.37.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^9.37.0",
+    "prettier": "^3.6.2",
+    "vitest": "^3.2.4"
+  }
+}
