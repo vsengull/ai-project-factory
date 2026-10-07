@@ -1,4 +1,4 @@
-name: { { projectPackageName } }
+name: '{{projectPackageName}}'
 description: An AI-agent-ready Flutter application.
 publish_to: none
 version: 0.1.0+1
