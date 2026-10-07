@@ -4,7 +4,7 @@
   "description": "Bootstrap AI-agent-ready Flutter, Next.js, and NestJS projects.",
   "type": "module",
   "bin": {
-    "ai-project-factory": "./bin/ai-project-factory.js"
+    "ai-project-factory": "bin/ai-project-factory.js"
   },
   "files": [
     "bin",
