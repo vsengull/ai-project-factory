@@ -1,0 +1,28 @@
+name: Feature request
+description: Propose a focused improvement or new stack
+title: '[Feature]: '
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What developer problem should the project solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the smallest useful behavior, including a CLI example when applicable.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: textarea
+    id: maintenance
+    attributes:
+      label: Maintenance and testing
+      description: For new stacks, explain how the template can be tested and kept current.

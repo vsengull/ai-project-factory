@@ -1,0 +1,49 @@
+name: Bug report
+description: Report reproducible incorrect behavior
+title: '[Bug]: '
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping improve AI Project Factory. Do not report vulnerabilities here; use SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output from `npx ai-project-factory --version`
+    validations:
+      required: true
+  - type: dropdown
+    id: stack
+    attributes:
+      label: Stack
+      options: [Next.js, NestJS, Flutter, CLI or shared files]
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide the exact command, inputs, and smallest reproducible sequence.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and logs
+      description: Remove tokens, credentials, and personal data.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system and Node.js version; include framework SDK version when relevant.
+    validations:
+      required: true
