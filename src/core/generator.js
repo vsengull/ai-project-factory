@@ -73,6 +73,7 @@ export async function generateProject({
     });
     await renderFiles(temporaryDirectory, {
       projectName,
+      projectPackageName: projectName.replaceAll('-', '_'),
       projectTitle: projectName
         .split('-')
         .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
