@@ -1,0 +1,10 @@
+.github/
+coverage/
+dist/
+node_modules/
+outputs/
+scripts/
+test/
+work/
+eslint.config.js
+vitest.config.js

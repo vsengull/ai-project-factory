@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm, stat } from 'node:fs/promises';
+import { mkdtemp, readFile, readdir, rm, stat } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -11,6 +11,17 @@ async function makeTemporaryDirectory() {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'ai-project-factory-test-'));
   temporaryDirectories.push(directory);
   return directory;
+}
+
+async function readProjectText(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const parts = await Promise.all(
+    entries.map((entry) => {
+      const entryPath = path.join(directory, entry.name);
+      return entry.isDirectory() ? readProjectText(entryPath) : readFile(entryPath, 'utf8');
+    }),
+  );
+  return parts.flat().join('\n');
 }
 
 afterEach(async () => {
@@ -31,6 +42,7 @@ describe('generateProject', () => {
     });
 
     const expectedFiles = [
+      '.gitignore',
       'AGENTS.md',
       'CLAUDE.md',
       'PROJECT_CONTEXT.md',
@@ -44,7 +56,7 @@ describe('generateProject', () => {
 
     const context = await readFile(path.join(result.targetDirectory, 'PROJECT_CONTEXT.md'), 'utf8');
     expect(context).toContain(stack.label);
-    expect(context).not.toContain('{{');
+    expect(await readProjectText(result.targetDirectory)).not.toMatch(/\{\{\s*[a-zA-Z]/);
   });
 
   it('renders a Dart-compatible Flutter package name', async () => {

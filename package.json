@@ -44,6 +44,10 @@
     "url": "https://github.com/vsengull/ai-project-factory/issues"
   },
   "homepage": "https://github.com/vsengull/ai-project-factory#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "dependencies": {
     "@inquirer/prompts": "^7.8.6",
     "commander": "^14.0.1"

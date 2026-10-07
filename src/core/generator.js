@@ -35,11 +35,14 @@ async function renderFiles(directory, variables) {
       }
 
       const content = await readFile(entryPath, 'utf8');
-      const rendered = Object.entries(variables).reduce(
-        (current, [key, value]) => current.replaceAll(`{{${key}}}`, value),
-        content,
-      );
+      const rendered = Object.entries(variables).reduce((current, [key, value]) => {
+        const marker = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'g');
+        return current.replace(marker, () => value);
+      }, content);
       await writeFile(entryPath, rendered);
+      if (entry.name === '_gitignore') {
+        await rename(entryPath, path.join(directory, '.gitignore'));
+      }
     }),
   );
 }

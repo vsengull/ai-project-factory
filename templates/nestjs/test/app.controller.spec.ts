@@ -1,15 +1,12 @@
-import { Test } from '@nestjs/testing';
+import { describe, expect, it } from 'vitest';
 import { AppController } from '../src/app.controller';
 import { AppService } from '../src/app.service';
 
 describe('AppController', () => {
-  it('reports a healthy service', async () => {
-    const module = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
-    }).compile();
+  it('reports a healthy service', () => {
+    const controller = new AppController(new AppService());
 
-    expect(module.get(AppController).getHealth()).toEqual({
+    expect(controller.getHealth()).toEqual({
       name: '{{projectName}}',
       status: 'ok',
     });
